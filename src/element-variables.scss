@@ -1,0 +1,82 @@
+/*
+Write your variables here. All available variables can be
+found in element-ui/packages/theme-chalk/src/common/var.scss.
+For example, to overwrite the theme color:
+*/
+$--color-primary: teal;
+
+/* icon font path, required */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import "~element-ui/packages/theme-chalk/src/index";
+
+th, td {
+  vertical-align: top !important;
+}
+
+.el-table .cell {
+  word-break: break-word;
+}
+
+.el-aside::-webkit-scrollbar {
+  width: 1em;
+  background-color: rgb(255, 255, 255);
+}
+
+.el-aside::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.el-aside::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.el-main::-webkit-scrollbar {
+  width: 1em;
+}
+
+.el-main::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.el-main::-webkit-scrollbar-track {
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.el-checkbox__inner {
+  width: 26px !important;
+  height: 26px !important;
+}
+
+.el-checkbox__inner::after {
+  width: 11px !important;
+  height: 11px !important;
+  border-width: 5px !important;
+}
+.el-checkbox__label{
+  font-size: 1.2rem;
+}
+
+.el-radio__label{
+  font-size: 1.5rem !important;
+}
+
+.reg-done .el-alert__title{
+  font-size: 1.8rem !important;
+}
+
+.reg-done .el-alert__content{
+  display: block !important;
+  margin-left: 25px;
+}
+
+.reg-done .el-alert__description{
+  font-size: 1.6rem !important;
+}
+
+.reg-done .el-alert__icon.is-big {
+  font-size: 4rem !important;
+  margin-right: 10px !important;
+}

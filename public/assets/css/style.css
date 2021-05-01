@@ -1,0 +1,102 @@
+body {
+    font-family: 'Cera Pro', Helvetica, sans-serif;
+}
+.el-main {
+    background-color: #f1f2f7;
+}
+.el-card, .el-tabs {
+    border: 0 !important;
+}
+.el-header-wrapper {
+    margin: 0;
+    padding: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.el-header-user-menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.el-default-link {
+    color: #000;
+}
+.el-default-link:hover {
+    color: #46c5de;
+}
+.el-header-title {
+    display: inline-block;
+    margin: 0;
+    margin-left: 15px;
+}
+.el-breadcrumb {
+    font-size: 14px;
+    line-height: 1;
+    margin: 0 -20px;
+    padding: 10px 20px;
+    color: #fff;
+    border-top: 1px solid #eee;
+}
+.el-breadcrumb__inner.is-link:hover,
+.el-breadcrumb__inner a:hover {
+    color: #46c5de !important;
+}
+.el-aside .el-menu-item,
+.el-aside .el-submenu__title {
+    font-size: 14px;
+    height: 45px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+}
+.el-aside .el-submenu .sub-menu-item {
+    margin-left: 0;
+    font-size: 14px;
+    height: 45px;
+    line-height: 46px;
+    position: relative;
+    padding-left: 55px !important;
+}
+/*.el-aside .el-submenu .sub-menu-item:before {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    left: 45px;*/
+/*    transform: translateY(-50%);*/
+/*    height: 3px;*/
+/*    width: 3px;*/
+/*    background: #fff;*/
+/*    border-radius: 50%;*/
+/*}*/
+.el-menu .el-menu--inline .el-submenu__title {
+    padding-left: 55px!important;
+}
+.el-button.is-plain:hover,
+.el-button.is-plain:focus {
+    border-color: #46c5de !important;
+    color: #46c5de !important;
+}
+.el-button--default:hover {
+    border-color: #46c5de !important;
+    color: #46c5de !important;
+}
+.el-button--primary {
+    background-color: #46c5de !important;
+    border-color: #46c5de !important;
+    color: #fff !important;
+}
+.el-button--primary:hover,
+.el-button--primary:focus {
+    opacity: 0.75;
+}
+.el-button--primary:hover span {
+    color: #fff !important;
+}
+.el-switch__label.is-active {
+    color: #46c5de !important;
+}
+
+.el-tabs__item.is-active {
+    color: #46c5de !important;
+}

@@ -1,0 +1,332 @@
+s<template>
+  <div>
+    <div class="table-filter">
+      <div class="select-label">Filter by sub id</div>
+      <el-select v-model="filterData.subID" clearable placeholder="Select">
+        <el-option
+          v-for="item in filter.subID"
+          :key="item.key"
+          :label="item.value"
+          :value="item.key"
+        >
+        </el-option>
+      </el-select>
+    </div>
+    <div class="table-filter">
+      <div class="select-label">Filter by date</div>
+      <el-date-picker
+        v-model="filterData.date"
+        type="daterange"
+        start-placeholder="Start Date"
+        end-placeholder="End Date"
+        value-format="dd.MM.yyyy"
+        v-bind:picker-options="pickerOptions"
+      >
+      </el-date-picker>
+    </div>
+    <div class="table-filter">
+      <div class="select-label">Filter by offers</div>
+      <el-select v-model="filterData.offer" clearable placeholder="Select">
+        <el-option
+          v-for="item in filter.offers"
+          :key="item.offer_name"
+          :label="item.offer_name"
+          :value="item.offer_id"
+        >
+        </el-option>
+      </el-select>
+    </div>
+    <div class="table-filter">
+      <div class="select-label">Filter by target</div>
+      <el-select v-model="filterData.target" clearable placeholder="Select">
+        <el-option
+          v-for="item in filter.targets"
+          :key="item.advert_offer_target_name"
+          :value="item.advert_offer_target_status"
+          :label="item.advert_offer_target_name"
+        >
+        </el-option>
+      </el-select>
+    </div>
+    <div class="table-filter">
+      <div class="select-label">Filter by region</div>
+      <el-select v-model="filterData.geo" clearable placeholder="Select">
+        <el-option
+          v-for="item in filter.regions"
+          :key="item.geo_name"
+          :label="item.geo_name"
+          :value="item.geo_id"
+        >
+        </el-option>
+      </el-select>
+    </div>
+    <div class="table-filter">
+      <el-button @click="updateTable"> Apply Filter </el-button>
+    </div>
+    <el-table :data="tableData" border width="100%" v-loading="loading">
+      <el-table-column label="Sub id">
+        <el-table-column prop="sub_id_1" width="72" label="SubID 1">
+        </el-table-column>
+        <el-table-column prop="sub_id_2" width="72" label="SubID 2">
+        </el-table-column>
+        <el-table-column prop="sub_id_3" width="72" label="SubID 3">
+        </el-table-column>
+        <el-table-column prop="sub_id_4" width="72" label="SubID 4">
+        </el-table-column>
+        <el-table-column prop="sub_id_5" width="72" label="SubID 5">
+        </el-table-column>
+      </el-table-column>
+      <el-table-column label="Traffic">
+        <el-table-column prop="views" width="60" label="Views">
+        </el-table-column>
+        <el-table-column prop="uniques" width="70" label="Unique">
+        </el-table-column>
+        <el-table-column prop="cr" width="100" label="Conversion Rate">
+        </el-table-column>
+      </el-table-column>
+      <el-table-column label="Conversion statistics">
+        <el-table-column prop="total" width="60" label="Total">
+        </el-table-column>
+        <el-table-column prop="pending" width="80" label="Pending">
+        </el-table-column>
+        <el-table-column prop="approved" width="90" label="Approved">
+        </el-table-column>
+        <el-table-column prop="rejected" label="Rejected"> </el-table-column>
+        <el-table-column prop="not_valid" width="60" label="Not Valid">
+        </el-table-column>
+        <!--        <el-table-column-->
+        <!--            prop="success_delivery"-->
+        <!--            label="Success delivery">-->
+        <!--        </el-table-column>-->
+      </el-table-column>
+      <el-table-column label="Quality">
+        <el-table-column prop="ar" label="Approve Rate"> </el-table-column>
+        <!--        <el-table-column-->
+        <!--            prop="up_sale_rate"-->
+        <!--            label="Up sale">-->
+        <!--        </el-table-column>-->
+      </el-table-column>
+      <el-table-column label="Finance $">
+        <!--        <el-table-column-->
+        <!--            prop="sr"-->
+        <!--            label="Success Rate">-->
+        <!--        </el-table-column>-->
+        <el-table-column prop="commission_success" label="Success">
+        </el-table-column>
+        <el-table-column prop="commission_potential" label="Potential">
+        </el-table-column>
+      </el-table-column>
+    </el-table>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      tableData: [],
+      filterData: {
+        subID: "0",
+      },
+      filter: {
+        subID: [
+          {
+            key: "0",
+            value: "All SubId",
+          },
+          {
+            key: "1",
+            value: "SubId 1",
+          },
+          {
+            key: "2",
+            value: "SubId 2",
+          },
+          {
+            key: "3",
+            value: "SubId 3",
+          },
+          {
+            key: "4",
+            value: "SubId 4",
+          },
+          {
+            key: "5",
+            value: "SubId 5",
+          },
+        ],
+        date: {},
+        offers: [],
+        targets: [],
+        regions: [],
+      },
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: "Today",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              picker.$emit("pick", [start, end]);
+            },
+          },
+          {
+            text: "Yesterday",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24);
+              end.setTime(end.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+          {
+            text: "Last 7 days",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+          {
+            text: "Last 30 days",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+          {
+            text: "This month",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setDate(1);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+          {
+            text: "Last month",
+            onClick(picker) {
+              const oDate = new Date();
+              var year = oDate.getFullYear();
+              var month = oDate.getMonth();
+              var start, end;
+              if (month == 0) {
+                year--;
+                start = new Date(year, 11, 1);
+                end = new Date(year, 11, 31);
+              } else {
+                start = new Date(year, month - 1, 1);
+                end = new Date(year, month, 0);
+              }
+
+              picker.$emit("pick", [start, end]);
+            },
+          },
+        ],
+      },
+      loading: true,
+    };
+  },
+  created() {
+    let filterOffersUrl = "http://back.w.crmka.net/wm_api/data-list/my-offers";
+    let filterTargetsUrl = "http://back.w.crmka.net/wm_api/data-list/targets";
+    let filterRegionsUrl = "http://back.w.crmka.net/wm_api/data-list/geo";
+
+    const requestOffersFilter = axios.get(filterOffersUrl);
+    const requestTargetsFilter = axios.get(filterTargetsUrl);
+    const requestRegionsFilter = axios.get(filterRegionsUrl);
+
+    axios
+      .all([requestOffersFilter, requestTargetsFilter, requestRegionsFilter])
+      .then(
+        axios.spread((...responses) => {
+          this.filter.offers = responses[0].data.data;
+          this.filter.targets = responses[1].data.data;
+          this.filter.regions = responses[2].data.data;
+        })
+      )
+      .catch((errors) => {
+        console.log(errors);
+      });
+    this.updateTable();
+  },
+  methods: {
+    prepareFilters() {
+      let filter = {};
+      if (this.filterData.date !== undefined && this.filterData.date !== null) {
+        filter.date = this.filterData.date;
+      }
+      if (
+        this.filterData.subID !== undefined &&
+        this.filterData.subID !== null &&
+        this.filterData.subID !== ""
+      ) {
+        filter.sub_id = this.filterData.subID;
+      }
+      if (
+        this.filterData.offer !== undefined &&
+        this.filterData.offer !== null &&
+        this.filterData.offer !== ""
+      ) {
+        filter.offer_id = this.filterData.offer;
+      }
+      if (
+        this.filterData.target !== undefined &&
+        this.filterData.target !== null &&
+        this.filterData.target !== ""
+      ) {
+        filter.advert_offer_target_status = this.filterData.target;
+      }
+      if (
+        this.filterData.geo !== undefined &&
+        this.filterData.geo !== null &&
+        this.filterData.geo !== ""
+      ) {
+        filter.geo_id = this.filterData.geo;
+      }
+      return filter;
+    },
+    updateTable() {
+      this.loading = true;
+      let statisticUrl = "http://back.w.crmka.net/wm_api/statistics/sub";
+      let filter = this.prepareFilters();
+      axios({
+        url: statisticUrl,
+        method: "post",
+        data: {
+          filter: filter,
+        },
+      })
+        .then((resp) => {
+          this.tableData = resp.data.data.statistics;
+          this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+};
+</script>
+
+<style scoped>
+.table-filter {
+  display: inline-block;
+  margin: 10px;
+  text-align: center;
+  margin-left: 0;
+  margin-bottom: 25px;
+}
+.select-label {
+  margin-bottom: 3px;
+  font-size: 13px;
+  text-align: left;
+  color: #afafaf;
+}
+</style>
